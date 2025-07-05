@@ -12,7 +12,11 @@ export default function TopNavbar({ pathname = "/" }) {
                     pathname != "/" ? <GeriButton /> : <div className="ml-2 size-10" />
                 }
                 <div>
-                    <p className="font-bold text-2xl tracking-wider text-inherit text-center m-auto">{settings.title}</p>
+                    <p className="font-bold text-2xl tracking-wider text-inherit text-center m-auto">
+                        {
+                            pathname == "/" ?
+                                settings.title : pathname.split("/")[2]}
+                    </p>
                 </div>
 
                 <div className="size-10" />

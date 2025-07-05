@@ -2,6 +2,7 @@ import { Card } from "@heroui/card";
 import { Image } from "@heroui/image";
 
 export default function UrunCard({ title, desc, price, image }) {
+
     return (
         <>
             <Card isHoverable radius="sm" shadow="sm" className="block my-2 p-2 h-70">
@@ -13,7 +14,7 @@ export default function UrunCard({ title, desc, price, image }) {
                                     alt="cay"
                                     className="object-cover"
                                     height={130}
-                                    src={`/${image}.webp`}
+                                    src={`/urunler/${image}.webp`}
                                     width={120}
                                     draggable={false}
                                     radius="sm"
@@ -27,7 +28,7 @@ export default function UrunCard({ title, desc, price, image }) {
                                 <p className="text-sm line-clamp-2 capitalize" style={{ lineHeight: "1.1rem" }}>{desc}</p>
                             </div>
                             <div className="pt-5">
-                                <p className="font-bold text-medium ">{price} ₺</p>
+                                <p className="font-bold text-medium ">{price.toString().replace('.',',')} ₺</p>
                             </div>
                     </div>
                 </div>
