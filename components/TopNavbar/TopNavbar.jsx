@@ -6,10 +6,7 @@ import { GeriIcon } from "@/public/icon.jsx"
 import Styles from "./style.module.css"
 import Link from "next/link";
 
-export default async function TopNavbar({ pathname = "/" }) {
-"px-6 kaldır menü için"
-    console.log(pathname);
-
+export default function TopNavbar({ pathname = "/" }) {
     return (
         <>
             <Navbar className={`${Styles.navbar} h-12 flex flex-col justify-between items-center px-0 `} >

@@ -2,7 +2,7 @@ import { Card, CardFooter } from "@heroui/card";
 import { Image } from "@heroui/image";
 import Link from "next/link";
 
-export default async function Urun({ title, image, url }) {
+export default function Urun({ title, image, url }) {
     
     return (
         <Link href={`/urun/${url}`} prefetch className="block transition-all duration-150 ease-out transform active:scale-90 active:rotate-1" >
