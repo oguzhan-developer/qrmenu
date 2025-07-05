@@ -11,6 +11,7 @@ export default function Home() {
     <Urun title="Aperatifler" image="aperatifler" url="aperatifler" />
     <Urun title="Tatlılar" image="ekler"/>
     </div>
+    
     <p className="mb-10">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
       Fugit maiores blanditiis hic excepturi officiis consequatur odit nisi,
       labore, ex cupiditate quisquam dolor sequi natus, assumenda molestiae
@@ -47,6 +48,7 @@ export default function Home() {
       Fugit maiores blanditiis hic excepturi officiis consequatur odit nisi,
       labore, ex cupiditate quisquam dolor sequi natus, assumenda molestiae
       voluptatum architecto recusandae atque!</p>
+
       </>
   );
 }
