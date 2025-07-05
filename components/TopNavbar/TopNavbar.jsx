@@ -1,5 +1,5 @@
 
-import { Navbar, NavbarContent } from "@heroui/navbar";
+import { Navbar } from "@heroui/navbar";
 import { Button } from "@heroui/button";
 import { settings } from "@/config/settings";
 import { GeriIcon } from "@/public/icon.jsx"
@@ -15,10 +15,11 @@ export default async function TopNavbar({ pathname = "/" }) {
             <Navbar className={`${Styles.navbar} h-12 flex flex-col justify-between items-center px-0 `} >
                 {
                     pathname != "/" ? (
-                        
-                        <Button isIconOnly  href="/" className="size-10" aria-label="geri" variant="light" color="primary">
+                        <Link href="/" className="size-10">
+                        <Button isIconOnly className="size-10" aria-label="geri" variant="light" color="primary">
                             <GeriIcon />
                         </Button>
+                        </Link>
 
                     ) : <div className="size-10" />
                 }
