@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/public/globals.css";
 import clsx from "clsx";
 import { Providers } from "./providers";
 import { fontRoboto, settings } from "@/config/settings";
