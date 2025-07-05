@@ -15,7 +15,7 @@ export default async function TopNavbar({ pathname = "/" }) {
             <Navbar className={`${Styles.navbar} h-12 flex flex-col justify-between items-center px-0 `} >
                 {
                     pathname != "/" ? (
-                        <Link href="/" className="size-10">
+                        <Link replace prefetch href="/" className="size-10">
                         <Button isIconOnly className="size-10" aria-label="geri" variant="light" color="primary">
                             <GeriIcon />
                         </Button>
