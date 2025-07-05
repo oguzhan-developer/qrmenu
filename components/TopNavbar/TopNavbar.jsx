@@ -4,28 +4,30 @@ import { Button } from "@heroui/button";
 import { settings } from "@/config/settings";
 import { GeriIcon } from "@/public/icon.jsx"
 import Styles from "./style.module.css"
+import Link from "next/link";
 
-export default async function TopNavbar({pathname = "/"}) {
-  
+export default async function TopNavbar({ pathname = "/" }) {
+"px-6 kaldır menü için"
     console.log(pathname);
-        
+
     return (
         <>
-            <Navbar className={`${Styles.navbar} h-12 flex justify-between `} >
+            <Navbar className={`${Styles.navbar} h-12 flex flex-col justify-between items-center px-0 `} >
                 {
                     pathname != "/" ? (
-                        <Button isIconOnly className="w-10" aria-label="geri" variant="light" color="primary">
+                        
+                        <Button isIconOnly  href="/" className="size-10" aria-label="geri" variant="light" color="primary">
                             <GeriIcon />
                         </Button>
 
-                    ) : ""
+                    ) : <div className="size-10" />
                 }
-                <NavbarContent className="m-auto">
-                    <p className="font-bold text-2xl tracking-wider text-inherit text-center m-auto w-max">{settings.title}</p>
-                </NavbarContent>
-                {
-                    pathname != "/" ? (<div className="size-10" />) : ""
-                }
+                <div>
+                        <p className="font-bold text-2xl tracking-wider text-inherit text-center m-auto">{settings.title}</p>
+                </div>
+
+                <div className="size-10" />
+
             </Navbar>
 
 

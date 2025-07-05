@@ -17,7 +17,7 @@ export default async function Urun({ title, image, url }) {
                     isZoomed
                 />
                 <CardFooter style={{ width: "95% !important" }} className="before:bg-white/10 justify-center border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 shadow-small z-10 m-0 bg-slate-600">
-                    <p className="text-center text-white/80">{title}</p>
+                    <p className="text-center text-white/80" >{title}</p>
                 </CardFooter>
             </Card>
         </Link>

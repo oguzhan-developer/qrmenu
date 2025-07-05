@@ -7,7 +7,7 @@ export default function Home() {
     <TopNavbar pathname="/" />
     <Banner />
     {/* <Divider className="my-2"/> */}
-    <div className="grid grid-cols-2 justify-center gap-4 max-w-md m-auto my-3">
+    <div className="grid grid-cols-2 justify-center gap-4 max-w-fit my-3 mx-3 m-auto max-h-fit ">
     <Urun title="Sıcak İçecekler" image="sicak" url="sicaklar" />
     <Urun title="Soğuk İçecekler" image="soguk" url="soguklar" />
     <Urun title="Aperatifler" image="aperatifler" url="aperatifler" />
