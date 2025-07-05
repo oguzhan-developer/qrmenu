@@ -2,9 +2,10 @@ import { Card, CardFooter } from "@heroui/card";
 import { Image } from "@heroui/image";
 import Link from "next/link";
 
-export default function Urun({ title, image, url }) {
+export default async function Urun({ title, image, url }) {
+    
     return (
-        <Link href={`/urun/${url}`} className="block transition-all duration-150 ease-out transform active:scale-90 active:rotate-1" >
+        <Link href={`/urun/${url}`} prefetch className="block transition-all duration-150 ease-out transform active:scale-90 active:rotate-1" >
             <Card isFooterBlurred isBlurred className="border-none items-center w-full max-w-[200px] mx-auto" radius="lg">
                 <Image
                     alt={title}

@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import clsx from "clsx";
-
 import { Providers } from "./providers";
 
 import { fontRoboto, settings } from "@/config/settings";
@@ -21,9 +20,11 @@ export const viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }) {
+
+
   return (
     <html suppressHydrationWarning lang="en">
       <head />
@@ -35,8 +36,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
-            <TopNavbar />
-            <main className="container mx-auto max-w-7xl pt-1 px-6 flex-grow">
+            <main className="container mx-auto max-w-7xl flex-grow">
               {children}
             </main>
           </div>
