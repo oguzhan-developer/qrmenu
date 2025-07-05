@@ -1,8 +1,7 @@
 import { Card } from "@heroui/card";
 import { Image } from "@heroui/image";
 
-export default function UrunCard({ title, image, url }) {
-    image = "aa"
+export default function UrunCard({ title, desc, price, image }) {
     return (
         <>
             <Card isHoverable radius="sm" shadow="sm" className="block my-2 p-2 h-70">
@@ -14,7 +13,7 @@ export default function UrunCard({ title, image, url }) {
                                     alt="cay"
                                     className="object-cover"
                                     height={130}
-                                    src={`/cay.jpg`}
+                                    src={`/${image}.webp`}
                                     width={120}
                                     draggable={false}
                                     radius="sm"
@@ -22,17 +21,14 @@ export default function UrunCard({ title, image, url }) {
                             )
                         }
                     </div>
-                    <div className="flex flex-col justify-around pl-4 pr-0">
-                        <div>
+                    <div className="flex flex-col justify-between py-2 pl-4 pr-0 select-none">
                             <div>
-                                <p className="font-bold text-medium">Espresso</p>
-                                <p className="text-sm line-clamp-2 capitalize" style={{ lineHeight: "1.1rem" }}>İmza espresso shot'umuz, mükemmel bir şekilde demlenmiş, cesur ve yoğun bir tat profili sunarak mükemmel bir şekilde demlenmiş.
-                                </p>
+                                <p className="font-bold text-medium">{title}</p>
+                                <p className="text-sm line-clamp-2 capitalize" style={{ lineHeight: "1.1rem" }}>{desc}</p>
                             </div>
-                            <div>
-                                <p className="font-bold text-medium ">120,00 ₺</p>
+                            <div className="pt-5">
+                                <p className="font-bold text-medium ">{price} ₺</p>
                             </div>
-                        </div>
                     </div>
                 </div>
             </Card>

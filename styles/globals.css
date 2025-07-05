@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+header{
+    padding: 0 !important;
+}
+
+main{
+
+    background-color: #f4f4f5;
+
+}

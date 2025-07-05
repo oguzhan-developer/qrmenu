@@ -1,4 +1,5 @@
 .container {
     border-radius: var(--heroui-radius-medium);
-    background-color: hsl(var(--heroui-default-100) / var(--heroui-default-100-opacity, var(--tw-bg-opacity)))
+    background: #475569;
+    color: white;
 }
