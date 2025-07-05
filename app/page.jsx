@@ -6,9 +6,9 @@ export default function Home() {
     <Banner />
     {/* <Divider className="my-2"/> */}
     <div className="grid grid-cols-2 justify-center gap-4 max-w-md m-auto my-3">
-    <Urun title="Sıcak İçecekler" image="cay" />
-    <Urun title="Soğuk İçecekler" image="soguk"/>
-    <Urun title="Sıcak İçecekler" image="cay" />
+    <Urun title="Sıcak İçecekler" image="sicak" url="sicaklar" />
+    <Urun title="Soğuk İçecekler" image="soguk" url="soguklar" />
+    <Urun title="Aperatifler" image="aperatifler" url="aperatifler" />
     <Urun title="Tatlılar" image="ekler"/>
     </div>
     <p className="mb-10">Lorem ipsum dolor, sit amet consectetur adipisicing elit.

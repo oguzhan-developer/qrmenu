@@ -5,9 +5,6 @@ import { useEffect } from "react";
 export default function Error({
   error,
   reset,
-}: {
-  error: Error;
-  reset: () => void;
 }) {
   useEffect(() => {
     console.error(error);
@@ -15,10 +12,9 @@ export default function Error({
 
   return (
     <div>
-      <h2>Something went wrong!</h2>
+      <h2>Hata oluştu!</h2>
       <button
         onClick={
-          // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
