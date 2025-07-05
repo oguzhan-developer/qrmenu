@@ -3,15 +3,12 @@ import clsx from "clsx";
 
 import { Providers } from "./providers";
 
-import { fontRoboto } from "@/config/fonts";
+import { fontRoboto, settings } from "@/config/settings";
 import TopNavbar from "@/components/TopNavbar/TopNavbar";
 
 export const metadata = {
-  title: {
-    default: "Kahve Dünyası Menü",
-   
-  },
-  description: "Kahve Dünyası'nın menüsüne hoş geldiniz. Burada lezzetli kahveler, tatlılar ve atıştırmalıklar bulabilirsiniz.",
+  title: settings.title,
+  description: settings.description,
   icons: {
     icon: "/favicon.ico",
   },
@@ -38,7 +35,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
-           <TopNavbar />
+            <TopNavbar />
             <main className="container mx-auto max-w-7xl pt-1 px-6 flex-grow">
               {children}
             </main>
