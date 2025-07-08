@@ -2,7 +2,7 @@ import { Card, CardFooter } from "@heroui/card";
 import { Image } from "@heroui/image";
 import Link from "next/link";
 
-export default function Kategori({ title, image, id }) {
+export default function KategoriCard({ title, image, id }) {
     
     return (
         <Link href={`/kategori/${id}`} prefetch className="block transition-all duration-150 ease-out transform active:scale-90 active:rotate-1" >

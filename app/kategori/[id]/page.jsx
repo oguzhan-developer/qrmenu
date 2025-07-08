@@ -1,6 +1,6 @@
 import TopNavbar from "@/components/TopNavbar/TopNavbar.jsx"
 import Styles from "./style.module.css"
-import UrunCard from "../../../components/UrunCard/UrunCard";
+import UrunCard from "@/components/Urunler/UrunCard/UrunCard";
 import { getUrunler, getKategori } from "@/lib/database";
 
 export default async function UrunPage({ params }) {
