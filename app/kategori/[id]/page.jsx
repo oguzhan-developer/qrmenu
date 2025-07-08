@@ -7,8 +7,6 @@ export default async function UrunPage({ params }) {
     const { id } = await params;
     const kategori = await getKategori(id);
     const urunler = await getUrunler(id)
-    console.log(urunler);
-    console.log(kategori);
 
     const formatPrice = (price) => {
         const num = parseFloat(price);
