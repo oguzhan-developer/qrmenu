@@ -1,6 +1,7 @@
 import { Card, CardFooter } from "@heroui/card";
 import { Image } from "@heroui/image";
 import Link from "next/link";
+import Styles from "./style.module.css"
 
 export default function KategoriCard({ title, image, id }) {
     
@@ -16,7 +17,7 @@ export default function KategoriCard({ title, image, id }) {
                     draggable={false}
                     isZoomed
                 />
-                <CardFooter style={{ width: "95% !important" }} className="before:bg-white/10 justify-center border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 shadow-small z-10 m-0 bg-slate-600">
+                <CardFooter className={`${Styles.cardFooter} before:bg-white/10 justify-center border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 shadow-small z-10 m-0 bg-slate-600`}>
                     <p className="text-center text-white/80" >{title}</p>
                 </CardFooter>
             </Card>

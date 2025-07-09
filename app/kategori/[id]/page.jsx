@@ -2,16 +2,13 @@ import TopNavbar from "@/components/TopNavbar/TopNavbar.jsx"
 import Styles from "./style.module.css"
 import UrunCard from "@/components/Urunler/UrunCard/UrunCard";
 import { getUrunler, getKategori } from "@/lib/database";
-
+import { formatPrice } from "@/lib/utils";
 export default async function UrunPage({ params }) {
     const { id } = await params;
     const kategori = await getKategori(id);
     const urunler = await getUrunler(id)
 
-    const formatPrice = (price) => {
-        const num = parseFloat(price);
-        return num.toFixed(2).replace(".", ",")
-    }
+    
     return (
         <>
             <TopNavbar pathname={`/kategori/${id}`} title={kategori.isim} />

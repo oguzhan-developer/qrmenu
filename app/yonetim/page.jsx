@@ -1,17 +1,15 @@
 import TopNavbar from "@/components/TopNavbar/TopNavbar.jsx";
 import { Button } from "@heroui/button";
 import Link from "next/link";
-export default function Yonetim() {
+import Styles from "./style.module.css";
+export default async function Yonetim() {
     return (
         <>
             <TopNavbar title="Yönetim Sayfası" />
-            <div className="grid grid-cols-2 justify-center gap-4 max-w-fit m-auto max-h-fit mt-5 mx-auto ">
-                <Link href="/yonetim/kategoriler">
-                <Button size="lg" color="primary" variant="flat">Kategorileri Düzenle</Button>
-                </Link>
-                <Link href="/yonetim/urunler">
-                <Button size="lg" color="primary" variant="flat">Ürünleri Düzenle</Button>
-                </Link>
+            <div className="w-full flex flex-col items-center justify-center mt-5">
+                    <Button as={Link} href="/yonetim/kategoriler" color="primary" variant="flat" className="m-1 min-w-min w-1/4 px-5">Kategorileri Düzenle</Button>
+                    <Button as={Link} href="/yonetim/urunler" color="primary" variant="flat" className="m-1 min-w-min w-1/4 px-5">Ürünleri Düzenle</Button>
+                    <Button as={Link} href="/yonetim/duyuru" color="primary" variant="flat" className="m-1 min-w-min w-1/4 px-5">Duyuru Düzenle</Button>
             </div>
 
         </>
