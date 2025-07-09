@@ -22,7 +22,10 @@ export default function BannerDuzenle({ duyuru, duyuruSubmit }) {
         setLoading(true);
         setError(false);
         try {
-
+            if(mesaj.length >59){
+                setError("Duyuru mesajı 60 karakterden uzun olamaz.");
+                return;
+            }
             const newData = {
                 duyuruMesaj: mesaj,
                 isDuyuruAktif: isAktif
@@ -60,6 +63,7 @@ export default function BannerDuzenle({ duyuru, duyuruSubmit }) {
                     >
                         <div className="flex flex-col gap-4 w-full ">
                             <Input
+                                maxLength={59}
                                 isRequired
                                 label="Duyuru Mesajı"
                                 labelPlacement="outside"
@@ -67,6 +71,7 @@ export default function BannerDuzenle({ duyuru, duyuruSubmit }) {
                                 type="text"
                                 value={mesaj}
                                 onValueChange={setMesaj}
+                                
                             />
                             <Switch isSelected={isAktif} onValueChange={setIsAktif}>
                                 <span className={isAktif ? "text-black-500" : "text-gray-300"}>
@@ -74,7 +79,7 @@ export default function BannerDuzenle({ duyuru, duyuruSubmit }) {
                                 </span>
                             </Switch>
 
-                            {error && <span className="text-danger text-small">Hata Oluştu. {error}</span>}
+                            {error && <span className="text-danger text-small">{error}</span>}
 
                             <div className="flex gap-4 items-center">
                                 <Button fullWidth color="primary" type="submit" isDisabled={loading} spinnerPlacement="end" isLoading={loading} size="sm">
