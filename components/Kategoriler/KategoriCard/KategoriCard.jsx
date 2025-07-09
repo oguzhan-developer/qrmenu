@@ -7,7 +7,7 @@ export default function KategoriCard({ title, image, id }) {
     
     return (
         <Link href={`/kategori/${id}`} prefetch className="block transition-all duration-150 ease-out transform active:scale-90 active:rotate-1" >
-            <Card isFooterBlurred isBlurred className="border-none items-center w-full max-w-[200px] mx-auto" radius="lg">
+            <Card className="border-none items-center w-full max-w-[200px] mx-auto" radius="lg">
                 <Image
                     alt={title}
                     className="object-cover"

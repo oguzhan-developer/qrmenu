@@ -33,7 +33,7 @@ export default async function Kategoriler({ searchParams }) {
 
     return (
         <>
-            <TopNavbar title="Kategoriler" />
+            <TopNavbar title="Kategoriler" pathname="/yonetim/kategoriler" />
             <Link isBlock showAnchorIcon href="/yonetim/kategoriler/yeni" className="mt-2">Yeni Kategori Ekle</Link>
             <div className="flex flex-nowrap justify-center max-w-fit m-auto max-h-fit mt-3 mb-1 mx-auto ">
                 <YonetimTablo kolonlar={liste} veriler={kategoriler} onSiraDegistir={handleSiraDegistir} />
