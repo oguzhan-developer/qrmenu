@@ -64,7 +64,6 @@ export default function DuzenleCard({ item, kategoriler }) {
     };
 
     const handleDelete = async () => {
-        // Onay dialog'u göster
         const confirmed = window.confirm(`"${item.isim}" kategorisini silmek istediğinizden emin misiniz?`);
 
         if (!confirmed) return;
