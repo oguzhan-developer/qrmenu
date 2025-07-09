@@ -6,7 +6,12 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ["@heroui/react"],
+    staleTimes:{
+      dynamic:0,
+      static:0,
+    }
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
