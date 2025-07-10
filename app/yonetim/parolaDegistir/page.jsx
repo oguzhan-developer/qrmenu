@@ -22,7 +22,7 @@ export default async function ParolaDegistir() {
     }
 
     return (<>
-        <TopNavbar title="Parola Değiştir" />
+        <TopNavbar title="Parola Değiştir" pathname="/yonetim/parolaDegistir" />
         <ParolaCard handleSubmit={handleSubmit} />
     </>)
 }

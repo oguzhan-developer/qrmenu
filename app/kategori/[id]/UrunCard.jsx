@@ -14,7 +14,7 @@ export default function UrunCard({ title, desc, price, image }) {
                                     alt="cay"
                                     className="object-cover"
                                     height={130}
-                                    src={`/urunler/${image}.webp`}
+                                    src={`/urunler/${image}`}
                                     width={120}
                                     draggable={false}
                                     radius="sm"

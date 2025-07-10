@@ -39,7 +39,7 @@ export default function UrunlerCard({ urunler, onSiraDegistir }) {
                             {/* Resim - Sabit boyut */}
                             <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24">
                                 <img
-                                    src={`/urunler/${urun.resim}.webp`}
+                                    src={`/urunler/${urun.resim}`}
                                     alt={urun.baslik}
                                     className="w-full h-full object-cover rounded"
                                 />
