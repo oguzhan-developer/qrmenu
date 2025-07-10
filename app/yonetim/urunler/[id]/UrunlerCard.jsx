@@ -4,107 +4,102 @@ import { Card } from "@heroui/card";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function UrunlerCard({ kolonlar, urunler, onSiraDegistir }) {
-    console.log(urunler);
-
+export default function UrunlerCard({ urunler, onSiraDegistir }) {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
-    const handleSiraArti = async (kategori) => {
+    console.log(urunler);
+
+    const handleSiraArti = async (urun) => {
         setLoading(true);
-        const altindakiKategori = veriler.find(k => k.sira === kategori.sira + 1)
-        if (altindakiKategori) {
-            await onSiraDegistir(kategori.id, kategori.sira + 1)
-            await onSiraDegistir(altindakiKategori.id, kategori.sira)
-            setLoading(false);
+        const altindakiUrun = urunler.find(u => u.sira === urun.sira + 1)
+        if (altindakiUrun) {
+            await onSiraDegistir(urun.id, urun.sira + 1)
+            await onSiraDegistir(altindakiUrun.id, urun.sira)
         }
+        setLoading(false);
     }
 
-    const handleSiraEksi = async (kategori) => {
+    const handleSiraEksi = async (urun) => {
         setLoading(true);
-        const ustundekiKategori = veriler.find(k => k.sira === kategori.sira - 1)
-        if (ustundekiKategori) {
-            await onSiraDegistir(kategori.id, kategori.sira - 1)
-            await onSiraDegistir(ustundekiKategori.id, kategori.sira)
-            setLoading(false);
+        const ustundekiUrun = urunler.find(u => u.sira === urun.sira - 1)
+        if (ustundekiUrun) {
+            await onSiraDegistir(urun.id, urun.sira - 1)
+            await onSiraDegistir(ustundekiUrun.id, urun.sira)
         }
+        setLoading(false);
     }
 
     return (
-        <>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            {
-                                kolonlar.map(kolon => (
-                                    <th key={kolon} scope="col" className="px-6 py-3">
-                                        {kolon}
-                                    </th>
-                                ))
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {urunler.map(urun => (
-                            <tr key={urun.sira} className="bg-white border-b hover:bg-gray-50">
-                                <td className="px-6 py-4 flex items-center self-center gap-2">
-                                    <span>{urun.sira}</span>
-                                    <div className="flex flex-col">
+        <div className="space-y-4 mt-3 mb-4">
+            {urunler.map(urun => (
+                <Card key={urun.id} className="p-4">
+                    <div className="flex items-start gap-4">
+                        <img
+                            src={`/urunler/${urun.resim}.webp`}
+                            alt={urun.baslik}
+                            className="w-16 h-16 object-cover rounded flex-shrink-0"
+                        />
+
+                        <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-2">
+                                <h3 className="font-medium text-gray-900 truncate">
+                                    {urun.baslik}
+                                </h3>
+                                <span className="text-lg font-bold text-primary">
+                                    {urun.fiyat}₺
+                                </span>
+                            </div>
+
+                            <p className={`text-sm text-gray-600 ${urun.aciklama ? "pb-3": "pb-5"}`}>
+
+                                {
+                                    urun.aciklama && urun.aciklama.slice(0, 40) + "..."
+                                }
+
+                            </p>
+
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm text-gray-500">Sıra: {urun.sira}</span>
+                                    <div className="flex gap-1">
                                         <Button
                                             size="sm"
                                             isIconOnly
                                             variant="faded"
                                             isDisabled={(urun.sira === 1) || loading}
                                             onClick={() => handleSiraEksi(urun)}
-                                            className="text-blue-600  text-xs disabled:text-gray-400 m-1"
+                                            className="text-xs"
                                         >
                                             ↑
                                         </Button>
                                         <Button
                                             size="sm"
                                             isIconOnly
-                                            color="primary"
                                             variant="faded"
                                             onClick={() => handleSiraArti(urun)}
-                                            isDisabled={(urun.sira === urun.length) || loading}
-                                            className="text-blue-600 text-xs disabled:text-gray-400 m-1"
+                                            isDisabled={(urun.sira === urunler.length) || loading}
+                                            className="text-xs"
                                         >
                                             ↓
                                         </Button>
                                     </div>
-                                </td>
-                                <td className="px-6 py-4 font-medium text-gray-900">
-                                    {urun.baslik}
-                                </td>
-                                <td className="px-6 py-4 font-medium text-gray-900">
-                                    {urun.aciklama.slice(0,30)+ "..."}
-                                </td>
-                                <td className="px-6 py-4 font-medium text-gray-900">
-                                    {urun.fiyat}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <img
-                                        src={`/urunler/${urun.resim}.webp`}
-                                        alt={urun.baslik}
-                                        className="w-20 h-20 object-cover rounded"
-                                    />
-                                </td>
-                                <td className="flex items-center px-6 py-4">
-                                    <button className="font-medium text-blue-600 hover:underline"
-                                        onClick={() => {
-                                            router.push(`/yonetim/urunler?edit=${urun.id}`)
-                                        }}
-                                    >
-                                        Düzenle
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                                </div>
 
-        </>
-    )
+                                <Button
+                                    size="sm"
+                                    color="primary"
+                                    variant="flat"
+                                    onClick={() => router.push(`/yonetim/urunler?edit=${urun.id}`)}
+                                >
+                                    Düzenle
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+            ))}
+        </div>
+    );
+
 }

@@ -1,10 +1,11 @@
 import TopNavbar from "@/components/TopNavbar/TopNavbar";
-import YonetimTablo from "@/components/YonetimTablo/YonetimTablo";
 import DuzenleCard from "@/components/Kategoriler/DuzenleCard/DuzenleCard";
 
 import { getKategoriler, updateKategoriSira } from "@/lib/database";
 import { revalidatePath } from "next/cache";
 import { Link } from "@heroui/link";
+import KategorilerTablosu from "./KategorilerTablosu";
+import { Button } from "@heroui/button";
 
 export default async function Kategoriler({ searchParams }) {
     const kategoriler = await getKategoriler();
@@ -34,9 +35,9 @@ export default async function Kategoriler({ searchParams }) {
     return (
         <>
             <TopNavbar title="Kategoriler" pathname="/yonetim/kategoriler" />
-            <Link isBlock showAnchorIcon href="/yonetim/kategoriler/yeni" className="mt-2">Yeni Kategori Ekle</Link>
+            <Button as={Link} variant="faded" href="/yonetim/kategoriler/yeni" className="mt-3">Yeni Kategori Ekle</Button>
             <div className="flex flex-nowrap justify-center max-w-fit m-auto max-h-fit mt-3 mb-1 mx-auto ">
-                <YonetimTablo kolonlar={liste} veriler={kategoriler} onSiraDegistir={handleSiraDegistir} />
+                <KategorilerTablosu kolonlar={liste} veriler={kategoriler} onSiraDegistir={handleSiraDegistir} />
             </div>
         </>
     )

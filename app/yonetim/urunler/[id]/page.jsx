@@ -1,16 +1,27 @@
 import TopNavbar from "@/components/TopNavbar/TopNavbar.jsx";
+import { getUrunler, getKategori } from "@/lib/database";
 import UrunlerCard from "./UrunlerCard";
-import { getUrunler } from "@/lib/database";
-import DenemeCard from "./DenemeCard";
+import { p } from "framer-motion/client";
+
 export default async function Urunler({ params }) {
-    const kolonlar = ["Sıra", "Başlık", "Açıklama", "Fiyat" , "Resim", "Aksiyonlar"]
+    const kolonlar = ["Sıra", "Başlık", "Açıklama", "Fiyat", "Resim", "Aksiyonlar"]
     const { id } = await params;
+    const kategori = await getKategori(id);
     const urunler = await getUrunler(id)
+    console.log("ürünler", urunler);
+    console.log(urunler.length);
+
+
     return (
         <>
-            <TopNavbar title="Ürünler" pathname={`/yonetim/urunler/${id}`} />
-            {/* <UrunlerCard kolonlar={kolonlar} urunler={urunler} /> */}
-            <DenemeCard kolonlar={kolonlar} urunler={urunler} />
+            <TopNavbar title={kategori.isim} pathname={`/yonetim/urunler/${id}`} />
+            {
+                urunler.length === 0 ? (
+                    <div className="mt-10 text-xl">Ürün Bulunamadı.</div>
+
+                ): <UrunlerCard kolonlar = { kolonlar } urunler = { urunler } />
+
+            }
         </>
 
     )

@@ -1,10 +1,9 @@
 "use client"
 import { Button } from "@heroui/button";
-import Styles from "./style.module.css"
 import { useRouter } from 'next/navigation'
 import React from "react";
 
-export default function YonetimTablo({ kolonlar, veriler, onSiraDegistir }) {
+export default function KategorilerTablosu({ kolonlar, veriler, onSiraDegistir }) {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
