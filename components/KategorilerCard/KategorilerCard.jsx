@@ -1,5 +1,5 @@
 import { getKategoriler } from "@/lib/database";
-import KategoriCard from "@/components/Kategoriler/KategoriCard/KategoriCard";
+import KategoriCard from "./KategoriCard"
 
 export default async function Kategoriler() {
     const kategoriler = await getKategoriler();

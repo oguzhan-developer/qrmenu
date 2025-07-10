@@ -8,7 +8,7 @@ import React from "react";
 import { updateKategori, removeKategori } from "@/lib/database";
 import { useRouter } from "next/navigation";
 
-export default function DuzenleCard({ item, kategoriler }) {
+export default function KategoriDuzenleCard({ item, kategoriler }) {
     const [isim, setIsim] = React.useState(item.isim || "");
     const [resim, setResim] = React.useState(item.resim || "");
     const [sira, setSira] = React.useState(item.sira.toString() || "");

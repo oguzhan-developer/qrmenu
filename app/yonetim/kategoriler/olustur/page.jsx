@@ -1,13 +1,13 @@
 import TopNavbar from "@/components/TopNavbar/TopNavbar";
-import KategoriEkle from "@/components/Kategoriler/EkleCard/KategoriEkle";
+import KategoriEkleCard from "./KategoriEkleCard"
 
 export default function YeniKategori() {
 
     return (
         <>
-            <TopNavbar title="Yeni Kategori Ekle" pathname="/yonetim/kategoriler/yeni" />
+            <TopNavbar title="Yeni Kategori Oluştur" pathname="/yonetim/kategoriler/olustur" />
             <div className="mx-auto mt-5">
-                <KategoriEkle />
+                <KategoriEkleCard />
             </div>
         </>
     )

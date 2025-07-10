@@ -7,7 +7,7 @@ export default async function Urunler() {
     // const urunler = await getUrunler();
     //Önce kategoriler gösterilmeli, seçilen kategoriye göre ürünler listelenmeli
     return (<>
-        <TopNavbar title="Ürün Düzenleme" />
+        <TopNavbar title="Ürün Düzenleme" pathname="/yonetim/urunler" />
         <KategorilerCard kategoriler={kategoriler} /> 
 
     </>)

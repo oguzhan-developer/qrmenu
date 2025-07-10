@@ -1,15 +1,16 @@
 "use client"
 import { Button } from "@heroui/button";
+import { Card } from "@heroui/card";
 import { useRouter } from 'next/navigation'
 import React from "react";
 
-export default function KategorilerTablosu({ kolonlar, veriler, onSiraDegistir }) {
+export default function KategorilerTablosu({ kolonlar, kategoriler, onSiraDegistir }) {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
     const handleSiraArti = async (kategori) => {
         setLoading(true);
-        const altindakiKategori = veriler.find(k => k.sira === kategori.sira + 1)
+        const altindakiKategori = kategoriler.find(k => k.sira === kategori.sira + 1)
         if (altindakiKategori) {
             await onSiraDegistir(kategori.id, kategori.sira + 1)
             await onSiraDegistir(altindakiKategori.id, kategori.sira)
@@ -19,7 +20,7 @@ export default function KategorilerTablosu({ kolonlar, veriler, onSiraDegistir }
 
     const handleSiraEksi = async (kategori) => {
         setLoading(true);
-        const ustundekiKategori = veriler.find(k => k.sira === kategori.sira - 1)
+        const ustundekiKategori = kategoriler.find(k => k.sira === kategori.sira - 1)
         if (ustundekiKategori) {
             await onSiraDegistir(kategori.id, kategori.sira - 1)
             await onSiraDegistir(ustundekiKategori.id, kategori.sira)
@@ -28,74 +29,74 @@ export default function KategorilerTablosu({ kolonlar, veriler, onSiraDegistir }
     }
 
     return (
-        <>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            {
-                                kolonlar.map(kolon => (
-                                    <th key={kolon} scope="col" className="px-6 py-3">
-                                        {kolon}
-                                    </th>
-                                ))
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {veriler.map(kategori => (
-                            <tr key={kategori.sira} className="bg-white border-b hover:bg-gray-50">
-                                <td className="px-6 py-4 flex items-center self-center gap-2">
-                                    <span>{kategori.sira}</span>
-                                    <div className="flex flex-col">
-                                        <Button
-                                            size="sm"
-                                            isIconOnly
-                                            variant="faded"
-                                            isDisabled={(kategori.sira === 1) || loading}
-                                            onClick={() => handleSiraEksi(kategori)}
-                                            className="text-blue-600  text-xs disabled:text-gray-400 m-1"
-                                        >
-                                            ↑
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            isIconOnly
-                                            color="primary"
-                                            variant="faded"
-                                            onClick={() => handleSiraArti(kategori)}
-                                            isDisabled={(kategori.sira === veriler.length) || loading}
-                                            className="text-blue-600 text-xs disabled:text-gray-400 m-1"
-                                        >
-                                            ↓
-                                        </Button>
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="space-y-4 mt-3 mb-4">
+                {kategoriler.map(kategori => (
+                    <Card key={kategori.sira} className="w-full max-w-none mx-auto p-4">
+                        <div className="flex items-start gap-4 h-32"> {/* Sabit yükseklik */}
+                            {/* Resim - Sabit boyut */}
+                            <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24">
+                                <img
+                                    src={`/kategoriler/${kategori.resim}.webp`}
+                                    alt={kategori.isim}
+                                    className="w-full h-full object-cover rounded"
+                                />
+                            </div>
+
+                            {/* İçerik */}
+                            <div className="flex-1 min-w-0 h-full flex flex-col justify-between">
+                                {/* Üst kısım - Başlık ve Fiyat */}
+                                <div className="flex items-start justify-between mb-2">
+                                    <div className="flex-1 min-w-0 pr-2">
+                                        <h3 className="font-semibold text-gray-900 text-xl sm:text-medium line-clamp-2 leading-tight">
+                                            {kategori.isim}
+                                        </h3>
                                     </div>
-                                </td>
-                                <td className="px-6 py-4 font-medium text-gray-900">
-                                    {kategori.isim}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <img
-                                        src={`/kategoriler/${kategori.resim}.webp`}
-                                        alt={kategori.isim}
-                                        className="w-20 h-20 object-cover rounded"
-                                    />
-                                </td>
-                                <td className="flex items-center px-6 py-4">
-                                    <button className="font-medium text-blue-600 hover:underline"
-                                        onClick={() => {
-                                            router.push(`/yonetim/kategoriler?edit=${kategori.id}`)
-                                        }}
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm text-gray-500 font-medium">
+                                            Sıra: {kategori.sira}
+                                        </span>
+                                        <div className="flex gap-1">
+                                            <Button
+                                                size="sm"
+                                                isIconOnly
+                                                variant="faded"
+                                                isDisabled={(kategori.sira === 1) || loading}
+                                                onClick={() => handleSiraEksi(kategori)}
+                                                className="text-xs min-w-8 h-8"
+                                            >
+                                                ↑
+                                            </Button>
+                                            <Button
+                                                size="sm"
+                                                isIconOnly
+                                                variant="faded"
+                                                onClick={() => handleSiraArti(kategori)}
+                                                isDisabled={(kategori.sira === kategoriler.length) || loading}
+                                                className="text-xs min-w-8 h-8"
+                                            >
+                                                ↓
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                    <Button
+                                        size="sm"
+                                        color="primary"
+                                        variant="flat"
+                                        onClick={() => router.push(`/yonetim/kategoriler?edit=${kategori.id}`)}
+                                        className="px-4"
                                     >
                                         Düzenle
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                ))}
             </div>
-
-        </>
-    )
+        </div>
+    );
 }

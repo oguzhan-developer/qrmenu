@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { createKategori } from "@/lib/database";
 
-export default function KategoriEkle({ kategoriler }) {
+export default function KategoriEkleCard() {
 
     const [isim, setIsim] = React.useState("");
     const [resim, setResim] = React.useState("");
@@ -54,7 +54,7 @@ export default function KategoriEkle({ kategoriler }) {
                     className="w-full justify-center items-center space-y-4 p-4"
                     onSubmit={handleSubmit}
                 >
-                    <div className="flex flex-col gap-4 ">
+                    <div className="flex flex-col gap-4">
                         <Input
                             isRequired
                             label="İsim"
@@ -80,7 +80,7 @@ export default function KategoriEkle({ kategoriler }) {
 
                         <div className="flex gap-4 items-center">
                             <Button className="w-full" color="primary" type="submit" spinnerPlacement="end" isLoading={loading} size="sm">
-                                Kaydet
+                                Oluştur
                             </Button>
 
                         </div>
