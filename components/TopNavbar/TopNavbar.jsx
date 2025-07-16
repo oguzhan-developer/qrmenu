@@ -2,9 +2,9 @@
 import { Navbar } from "@heroui/navbar";
 import { settings } from "@/config/settings";
 import GeriButton from "@/components/GeriButton/GeriButton"
+import YonetimSayfaButton from "@/components/YonetimSayfaButton/YonetimSayfaButton.jsx";
 import Styles from "./style.module.css"
-
-export default function TopNavbar({ pathname = "/", title = settings.title }) {
+export default function TopNavbar({ pathname = "/", title = settings.title, isYonetim = false }) {
     return (
         <>
             <Navbar className={`${Styles.navbar} h-12 flex flex-col justify-between items-center px-0 `} >
@@ -17,7 +17,10 @@ export default function TopNavbar({ pathname = "/", title = settings.title }) {
                     </p>
                 </div>
 
-                <div className="size-10" />
+                {
+                    isYonetim ? (<YonetimSayfaButton />) : <div className="size-10" />
+                }
+                
 
             </Navbar>
 

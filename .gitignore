@@ -5,8 +5,8 @@
 /.pnp
 .pnp.js
 
-# testing
-/coverage
+# Test scriptlerini içeren dizin
+/test-scripts/
 
 # next.js
 /.next/

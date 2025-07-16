@@ -6,16 +6,44 @@ import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { createKategori } from "@/lib/database";
+import ImageInput from "@/components/ImageInput/ImageInput";
 
-export default function KategoriEkleCard() {
+export default function KategoriEkleCard({ handleCreate }) {
+    const [resimFile, setResimFile] = React.useState(null);
+    const [resimPreview, setResimPreview] = React.useState(null);
 
     const [isim, setIsim] = React.useState("");
-    const [resim, setResim] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(false);
     const router = useRouter();
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Dosya tipi kontrolü
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                setError('Desteklenmeyen dosya tipi. Sadece JPG, PNG ve WebP dosyaları kabul edilir.');
+                return;
+            }
+
+            // Dosya boyutu kontrolü (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                setError('Dosya boyutu çok büyük. Maksimum 5MB olabilir.');
+                return;
+            }
+
+            setResimFile(file);
+            setError("");
+
+            // Preview oluştur
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setResimPreview(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,10 +53,10 @@ export default function KategoriEkleCard() {
         try {
             var data = {
                 isim,
-                resim,
+                resim: resimFile ? resimFile : null,
             }
 
-            const result = await createKategori(data);
+            const result = await handleCreate(data);
             if (result.error) {
                 console.error('Ekleme hatası:', result.error);
                 setError(true);
@@ -65,16 +93,18 @@ export default function KategoriEkleCard() {
                             onValueChange={setIsim}
                         />
 
-                        <Input
-                            isRequired
-                            label="Resim"
-                            labelPlacement="outside"
-                            name="resim"
-                            type="text"
-                            value={resim}
-                            onValueChange={setResim}
-                        />
+                        <ImageInput onChange={handleFileChange} />
 
+                        {resimPreview && (
+                            <div className="mx-auto">
+                                <img
+                                    src={resimPreview}
+                                    alt="Önizleme"
+                                    className="w-24 h-24 object-cover rounded border"
+                                />
+                                <p className='text-center text-xs mt-1 text-gray-400'>Önizleme</p>
+                            </div>
+                        )}
 
                         {error && <span className="text-danger text-small">Hata Oluştu. {error}</span>}
 

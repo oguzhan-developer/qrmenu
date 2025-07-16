@@ -7,6 +7,10 @@ export const fontRoboto = Roboto({
 
 
 export const settings = {
-    title:"Kahve Diyarı",
-    description: "Kahve Diyarı'nın menüsüne hoş geldiniz. Burada lezzetli kahveler, tatlılar ve atıştırmalıklar bulabilirsiniz.",
+  title: "Kahve Diyarı",
+  description: "Kahve Diyarı'nın menüsüne hoş geldiniz. Burada lezzetli kahveler, tatlılar ve atıştırmalıklar bulabilirsiniz.",
+  imageUpload: {
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+    maxSize: 10 * 1024 * 1024, // 10 MB
+  }
 }

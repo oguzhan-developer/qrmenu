@@ -4,7 +4,11 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
   },
+
   experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
     optimizePackageImports: ["@heroui/react"],
     staleTimes: {
       dynamic: 0,

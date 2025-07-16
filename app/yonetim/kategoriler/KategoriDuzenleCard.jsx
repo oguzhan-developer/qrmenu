@@ -5,17 +5,20 @@ import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import React from "react";
-import { updateKategori, removeKategori } from "@/lib/database";
 import { useRouter } from "next/navigation";
+import ImageInput from '@/components/ImageInput/ImageInput';
 
-export default function KategoriDuzenleCard({ item, kategoriler }) {
+export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKategori, handleDeleteKategori }) {
     const [isim, setIsim] = React.useState(item.isim || "");
-    const [resim, setResim] = React.useState(item.resim || "");
+    const [resimFile, setResimFile] = React.useState(null);
+    const [resimPreview, setResimPreview] = React.useState(item.resim || null);
+
     const [sira, setSira] = React.useState(item.sira.toString() || "");
     const [loading, setLoading] = React.useState(false);
     const [deleteLoading, setDeleteLoading] = React.useState(false);
-
     const [error, setError] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+
     const router = useRouter();
     const siralar = kategoriler
         .map(kategori => kategori.sira)
@@ -25,43 +28,64 @@ export default function KategoriDuzenleCard({ item, kategoriler }) {
         e.preventDefault();
         setLoading(true);
         setError(false);
+        setSuccess(false);
 
         try {
-            var updateData = {}
-            if (item.sira === parseInt(sira)) {
-                updateData = {
-                    changeSira: false,
-                    isim: isim,
-                    resim: resim,
-                    sira: parseInt(sira)
-                };
-            } else {
-                updateData = {
-                    changeSira: true,
-                    oncekiSira: item.sira,
-                    isim: isim,
-                    resim: resim,
-                    sira: parseInt(sira)
-                }
-            }
+            var newData = {
+                id: item.id,
+                isim, resim: resimPreview, resimFile, sira: parseInt(sira), oncekiSira: item.sira,
 
-            const result = await updateKategori(item.id, updateData);
+            }
+            const result = await handleUpdateKategori(newData);
 
             if (result.error) {
                 console.error('Güncelleme hatası:', result.error);
-                setError(true);
+                setError("Kategori güncellenirken hata oluştu.");
             } else {
                 setError(false);
-                router.push('/yonetim/kategoriler');
+                setSuccess(true);
+                setTimeout(() => {
+                    router.push('/yonetim/kategoriler');
+                }, 500)
             }
         } catch (error) {
             console.error('Hata:', error);
-            setError(true);
-            alert('Güncelleme sırasında hata oluştu!');
+            setError("Güncelleme sırasında hata oluştu!");
         } finally {
             setLoading(false);
         }
     };
+
+
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Dosya tipi kontrolü
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                setError('Desteklenmeyen dosya tipi. Sadece JPG, PNG ve WebP dosyaları kabul edilir.');
+                return;
+            }
+
+            // Dosya boyutu kontrolü (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                setError('Dosya boyutu çok büyük. Maksimum 5MB olabilir.');
+                return;
+            }
+
+            setResimFile(file);
+            setError("");
+
+            // Preview oluştur
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setResimPreview(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
 
     const handleDelete = async () => {
         const confirmed = window.confirm(`"${item.isim}" kategorisini silmek istediğinizden emin misiniz?`);
@@ -72,20 +96,18 @@ export default function KategoriDuzenleCard({ item, kategoriler }) {
         setError(false);
 
         try {
-            const result = await removeKategori(item.id);
+            const result = await handleDeleteKategori(item.id);
 
             if (result.error) {
                 console.error('Silme hatası:', result.error);
 
                 if (result.error.code === 'CATEGORY_HAS_PRODUCTS') {
-                    alert('Bu kategoriye ait ürünler mevcut. Önce ürünleri silin.');
+                    setError('Bu kategoriye ait ürünler mevcut. Önce ürünleri silin.');
                 } else {
-                    alert('Silme sırasında hata oluştu!');
+                    setError('Silme sırasında hata oluştu!');
                 }
-
-                setError(true);
             } else {
-                alert('Kategori başarıyla silindi!');
+                setSuccess('Kategori başarıyla silindi!');
                 router.push('/yonetim/kategoriler');
             }
         } catch (error) {
@@ -115,15 +137,18 @@ export default function KategoriDuzenleCard({ item, kategoriler }) {
                             onValueChange={setIsim}
                         />
 
-                        <Input
-                            isRequired
-                            label="Resim"
-                            labelPlacement="outside"
-                            name="resim"
-                            type="text"
-                            value={resim}
-                            onValueChange={setResim}
-                        />
+                        <ImageInput onChange={handleFileChange} />
+                    
+                        {resimPreview && (
+                            <div className="mx-auto">
+                                <img
+                                    src={resimFile ? resimPreview : `/kategoriler/${resimPreview}`}
+                                    alt="Önizleme"
+                                    className="w-24 h-24 object-cover rounded border"
+                                />
+                                <p className='text-center text-xs mt-1 text-gray-400'>Önizleme</p>
+                            </div>
+                        )}
 
                         <Select
                             isRequired

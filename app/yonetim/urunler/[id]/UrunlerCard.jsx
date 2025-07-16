@@ -108,7 +108,7 @@ export default function UrunlerCard({ urunler, onSiraDegistir }) {
                                         size="sm"
                                         color="primary"
                                         variant="flat"
-                                        onClick={() => router.push(`/yonetim/urunler?edit=${urun.id}`)}
+                                        onClick={() => router.push(`?edit=${urun.id}`)}
                                         className="px-4"
                                     >
                                         Düzenle

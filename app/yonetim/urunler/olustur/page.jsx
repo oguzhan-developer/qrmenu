@@ -7,14 +7,14 @@ export default async function UrunOlusturPage() {
 
   const handleCreate = async (data) => {
     "use server"
-    const { fileName, error: fileError } = await saveProductImage(data.resim);
+    const { fileName, error: fileError } = await saveProductImage(data.resim, "urunler");
     if (fileError) {
       return { error: fileError };
     }
     data.resim = fileName
     const result = await createUrun(data);
     if (result.error) {
-      await deleteProductImage(fileName);
+      await deleteProductImage(fileName, "urunler");
       return { error: 'Ürün veritabanına kaydedilemedi' };
     }
     return result;
@@ -22,7 +22,7 @@ export default async function UrunOlusturPage() {
 
   return (
     <>
-      <TopNavbar title="Ürün Oluştur" pathname="/yonetim/urunler/olustur" />
+      <TopNavbar title="Ürün Oluştur" pathname="/yonetim/urunler/olustur" isYonetim />
       <UrunOlusturCard kategoriler={kategoriler} handleCreate={handleCreate} />
     </>
   )

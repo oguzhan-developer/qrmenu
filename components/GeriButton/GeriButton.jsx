@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@heroui/button";
-import { GeriIcon } from "@/public/icon.jsx"
+import { LeftIcon } from "@/public/icon.jsx"
 
 export default function GeriButton() {
     const handleBackPress = () => {
@@ -15,7 +15,7 @@ export default function GeriButton() {
             variant="light" 
             color="primary"
         >
-            <GeriIcon />
+            <LeftIcon />
         </Button>
     )
 }

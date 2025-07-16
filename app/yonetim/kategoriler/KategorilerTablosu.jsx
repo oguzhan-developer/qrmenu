@@ -33,19 +33,16 @@ export default function KategorilerTablosu({ kolonlar, kategoriler, onSiraDegist
             <div className="space-y-4 mt-3 mb-4">
                 {kategoriler.map(kategori => (
                     <Card key={kategori.sira} className="w-full max-w-none mx-auto p-4">
-                        <div className="flex items-start gap-4 h-32"> {/* Sabit yükseklik */}
-                            {/* Resim - Sabit boyut */}
+                        <div className="flex items-start gap-4 h-32">
                             <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24">
                                 <img
-                                    src={`/kategoriler/${kategori.resim}.webp`}
+                                    src={`/kategoriler/${kategori.resim}`}
                                     alt={kategori.isim}
                                     className="w-full h-full object-cover rounded"
                                 />
                             </div>
 
-                            {/* İçerik */}
                             <div className="flex-1 min-w-0 h-full flex flex-col justify-between">
-                                {/* Üst kısım - Başlık ve Fiyat */}
                                 <div className="flex items-start justify-between mb-2">
                                     <div className="flex-1 min-w-0 pr-2">
                                         <h3 className="font-semibold text-gray-900 text-xl sm:text-medium line-clamp-2 leading-tight">
