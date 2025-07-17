@@ -8,8 +8,6 @@ import { Input, Textarea } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { Button } from "@heroui/button";
 import { NumberInput } from "@heroui/number-input";
-import { objectToFormData } from "@/lib/utils";
-import { settings } from "@/config/settings";
 
 export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpdateUrun, handleDeleteUrun }) {
     const [baslik, setBaslik] = React.useState(urun.baslik || "");
@@ -44,11 +42,8 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                 newData.yeniResim = resimFile;
                 newData.mevcutResim = urun.resim;
             }
-
-            const formData = objectToFormData(newData);
-            console.log("ürün düzenlede formdata", formData);
-
-            const result = await handleUpdateUrun(formData);
+            
+            const result = await handleUpdateUrun(newData);
             if (result?.error) {
                 setError(result.error);
             } else {
@@ -69,36 +64,6 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
 
     const handleDelete = async (e) => {
     }
-
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const allowedTypes = settings.imageUpload.allowedTypes;
-        if (!allowedTypes.includes(file.type)) {
-            setError('Desteklenmeyen dosya tipi. Sadece JPG, PNG ve WebP dosyaları kabul edilir.');
-            return;
-        }
-
-        // Dosya boyutu kontrolü (10MB)
-        if (file.size > settings.imageUpload.maxSize) {
-            setError('Dosya boyutu çok büyük.');
-            return;
-        }
-
-        setResimFile(file);
-        setError("");
-
-        // Preview oluştur
-        const reader = new FileReader();
-        reader.onload = (e) => setResimPreview(e.target.result);
-
-        reader.readAsDataURL(file);
-    };
-
-
-
-
 
     return (
         <div className="my-5">
@@ -127,18 +92,7 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                             onValueChange={setAciklama}
                         />
 
-                        <ImageInput onChange={handleFileChange} />
-
-                        {(resimPreview || mevcutResimUrl) && (
-                            <div className="mx-auto">
-                                <img
-                                    src={resimPreview || mevcutResimUrl}
-                                    alt="Ürün Resmi"
-                                    className="w-24 h-24 object-cover rounded border"
-                                />
-                                <p className='text-center text-xs mt-1 text-gray-400'>Önizleme</p>
-                            </div>
-                        )}
+                        <ImageInput resimPreview={resimPreview} mevcutResimUrl={mevcutResimUrl} setResimFile={setResimFile} setResimPreview={setResimPreview} setError={setError} />
 
                         <NumberInput
                             type="number"

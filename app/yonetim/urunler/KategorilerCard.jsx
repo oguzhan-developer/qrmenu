@@ -30,12 +30,6 @@ export default function KategorilerCard({ kategoriler }) {
                 <Button as={Link} href={`/yonetim/urunler/${secilenKategori}`} className="m-2 text-medium" color="primary">
                 Ürünleri Görüntüle
                 </Button>
-
-            {/* {kategoriler.map((kategori) => (
-                <Button as={Link} href={`/yonetim/urunler/${kategori.id}`}
-                 key={kategori.id} className="m-2 text-medium" color="primary">{kategori.isim}</Button>
-            ))} */}
-
             <Divider className="my-5" />
              <Button as={Link} color="primary" href="/yonetim/urunler/olustur" className="m-2 text-medium">Ürün Oluştur</Button>
         </Card>

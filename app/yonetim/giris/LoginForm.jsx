@@ -17,7 +17,7 @@ export default function LoginForm({ handleLogin, redirectTo }) {
 
         const formData = new FormData();
         formData.append('parola', parola);
-        
+
         const result = await handleLogin(formData);
 
         if (result?.error) {
@@ -38,7 +38,7 @@ export default function LoginForm({ handleLogin, redirectTo }) {
                         <h2 className="text-xl font-bold text-center mb-4">
                             Yönetim Paneli Girişi
                         </h2>
-                        
+
                         <Input
                             isRequired
                             label="Parola"
@@ -54,10 +54,10 @@ export default function LoginForm({ handleLogin, redirectTo }) {
                             <span className="text-danger text-small">{error}</span>
                         )}
 
-                        <Button 
-                            fullWidth 
-                            color="primary" 
-                            type="submit" 
+                        <Button
+                            fullWidth
+                            color="primary"
+                            type="submit"
                             isLoading={loading}
                             disabled={loading}
                             size="lg"

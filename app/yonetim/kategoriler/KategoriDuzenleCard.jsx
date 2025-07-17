@@ -10,8 +10,10 @@ import ImageInput from '@/components/ImageInput/ImageInput';
 
 export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKategori, handleDeleteKategori }) {
     const [isim, setIsim] = React.useState(item.isim || "");
-    const [resimFile, setResimFile] = React.useState(null);
-    const [resimPreview, setResimPreview] = React.useState(item.resim || null);
+    // Resim için ayrı ve temiz state'ler
+    const [resimFile, setResimFile] = React.useState(null); // Sadece yeni seçilen File objesi
+    const [resimPreview, setResimPreview] = React.useState(null); // Sadece yeni seçilen resmin data URL'i
+    const [mevcutResimUrl] = React.useState(item.resim ? `/kategoriler/${item.resim}` : null); // Mevcut resmin URL'i, sabit
 
     const [sira, setSira] = React.useState(item.sira.toString() || "");
     const [loading, setLoading] = React.useState(false);
@@ -30,12 +32,20 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
         setError(false);
         setSuccess(false);
 
+        console.log("Resim flie",resimFile);
+        
         try {
             var newData = {
                 id: item.id,
-                isim, resim: resimPreview, resimFile, sira: parseInt(sira), oncekiSira: item.sira,
+                isim, sira: parseInt(sira), oncekiSira: item.sira,
 
             }
+            if (resimFile) {
+                newData.yeniResim = resimFile;
+                newData.mevcutResim = item.resim;
+            }
+            console.log("Güncelleme verisi:", newData);
+            
             const result = await handleUpdateKategori(newData);
 
             if (result.error) {
@@ -55,37 +65,6 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
             setLoading(false);
         }
     };
-
-
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            // Dosya tipi kontrolü
-            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-            if (!allowedTypes.includes(file.type)) {
-                setError('Desteklenmeyen dosya tipi. Sadece JPG, PNG ve WebP dosyaları kabul edilir.');
-                return;
-            }
-
-            // Dosya boyutu kontrolü (5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                setError('Dosya boyutu çok büyük. Maksimum 5MB olabilir.');
-                return;
-            }
-
-            setResimFile(file);
-            setError("");
-
-            // Preview oluştur
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setResimPreview(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
 
     const handleDelete = async () => {
         const confirmed = window.confirm(`"${item.isim}" kategorisini silmek istediğinizden emin misiniz?`);
@@ -137,18 +116,7 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                             onValueChange={setIsim}
                         />
 
-                        <ImageInput onChange={handleFileChange} />
-                    
-                        {resimPreview && (
-                            <div className="mx-auto">
-                                <img
-                                    src={resimFile ? resimPreview : `/kategoriler/${resimPreview}`}
-                                    alt="Önizleme"
-                                    className="w-24 h-24 object-cover rounded border"
-                                />
-                                <p className='text-center text-xs mt-1 text-gray-400'>Önizleme</p>
-                            </div>
-                        )}
+                        <ImageInput resimPreview={resimPreview} mevcutResimUrl={mevcutResimUrl} setResimFile={setResimFile} setResimPreview={setResimPreview} setError={setError} />
 
                         <Select
                             isRequired

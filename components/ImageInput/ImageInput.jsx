@@ -1,5 +1,31 @@
+"use client"
+import { settings } from "@/config/settings";
 
-export default function ImageInput({onChange}) {
+export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile, setResimPreview, setError }) {
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const allowedTypes = settings.imageUpload.allowedTypes;
+        if (!allowedTypes.includes(file.type)) {
+            setError('Desteklenmeyen dosya tipi. Sadece JPG, PNG ve WebP dosyaları kabul edilir.');
+            return;
+        }
+
+        // Dosya boyutu kontrolü (10MB)
+        if (file.size > settings.imageUpload.maxSize) {
+            setError('Dosya boyutu çok büyük.');
+            return;
+        }
+
+        setResimFile(file);
+        setError("");
+
+        // Preview oluştur
+        const reader = new FileReader();
+        reader.onload = (e) => setResimPreview(e.target.result);
+
+        reader.readAsDataURL(file);
+    };
     return (
         <>
             <div className="flex items-center justify-center w-full">
@@ -12,14 +38,23 @@ export default function ImageInput({onChange}) {
                         <p className="text-xs text-gray-500 dark:text-gray-400 px-3">JPG, PNG veya WeBP, maksimum 10MB</p>
                     </div>
                     <input id='dropzone-file' type="file"
-                    name="inputFile"
+                        name="inputFile"
                         accept="image/jpeg,image/jpg,image/png,image/webp"
-                        onChange={onChange}
+                        onChange={handleFileChange}
                         className="hidden"
-                         />
+                    />
                 </label>
             </div>
-
+            {(resimPreview || mevcutResimUrl) && (
+                <div className="mx-auto">
+                    <img
+                        src={resimPreview || mevcutResimUrl}
+                        alt="Ürün Resmi"
+                        className="w-24 h-24 object-cover rounded border"
+                    />
+                    <p className='text-center text-xs mt-1 text-gray-400'>Önizleme</p>
+                </div>
+            )}
         </>
     )
 }

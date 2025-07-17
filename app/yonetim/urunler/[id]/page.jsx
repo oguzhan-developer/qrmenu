@@ -1,10 +1,9 @@
 import TopNavbar from "@/components/TopNavbar/TopNavbar.jsx";
-import { updateUrun, getUrunler, getKategori, getKategoriler } from "@/lib/database";
-import { saveProductImage, deleteProductImage } from "@/lib/fileUpload";
+import { updateUrun, updateUrunSira, getUrunler, getKategori, getKategoriler } from "@/lib/database";
 import UrunlerCard from "./UrunlerCard";
 import UrunDuzenleCard from "./UrunDuzenleCard";
-import { formDataToObject } from "@/lib/utils";
-
+import { formDataToUpdate } from "@/lib/form-handler";
+import { revalidatePath } from "next/cache";
 export default async function Urunler({ params, searchParams }) {
 
     const { id } = await params;
@@ -17,38 +16,15 @@ export default async function Urunler({ params, searchParams }) {
     const urunler = await getUrunler(id)
 
 
+    const onSiraDegistir = async (id, yeniSira) => {
+            "use server"
+            await updateUrunSira(id, yeniSira);
+            revalidatePath("/yonetim/urunler")
+        }
+
     const handleUpdateUrun = async (formData) => {
         "use server"
-        try {
-            var data = formDataToObject(formData)
-
-            if (data.yeniResim && data.yeniResim.size > 0) {
-                const { fileName, error: uploadError } = await saveProductImage(data.yeniResim, "urunler")
-                if (uploadError) {
-                    return { error: `Resim yüklenemedi: ${uploadError}` };
-                }
-                data.resim = fileName;
-                delete data.yeniResim;
-                if (data.mevcutResim) {
-                    await deleteProductImage(data.mevcutResim, "urunler");
-                    delete data.mevcutResim;
-                }
-            }
-
-
-            const { error: dbError } = await updateUrun(data.id, data);
-            if (dbError) {
-                if (data.resim) {
-                    await deleteProductImage(data.resim, "urunler");
-                }
-                return { error: `Veritabanı hatası: ${dbError.message}` };
-            }
-            return { success: true };
-
-        } catch (error) {
-            console.error('handleUpdateUrun Hata:', error);
-            return { error: 'Ürün güncellenirken hata oluştu!' };
-        }
+        return await formDataToUpdate(formData, updateUrun, "urunler")
     }
 
 
@@ -71,7 +47,7 @@ export default async function Urunler({ params, searchParams }) {
                 urunler.length === 0 ? (
                     <div className="mt-10 text-xl">Ürün Bulunamadı.</div>
 
-                ) : <UrunlerCard urunler={urunler} />
+                ) : <UrunlerCard urunler={urunler} onSiraDegistir={onSiraDegistir} />
 
             }
         </>
