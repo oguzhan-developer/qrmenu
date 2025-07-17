@@ -4,11 +4,20 @@ import { Card } from "@heroui/card";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import React from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 
 export default function LoginForm({ handleLogin, redirectTo }) {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState("");
     const [parola, setParola] = React.useState("");
+
+    const parolaInputRef = useRef(null);
+
+    useEffect(() => {
+        if (parolaInputRef.current) parolaInputRef.current.focus();
+    }, [error])
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -40,6 +49,8 @@ export default function LoginForm({ handleLogin, redirectTo }) {
                         </h2>
 
                         <Input
+                        className="focus:outline-none"
+                            ref={parolaInputRef}
                             isRequired
                             label="Parola"
                             labelPlacement="outside"
@@ -48,6 +59,7 @@ export default function LoginForm({ handleLogin, redirectTo }) {
                             value={parola}
                             onValueChange={setParola}
                             placeholder="Parolanızı girin"
+                            fullWidth
                         />
 
                         {error && (

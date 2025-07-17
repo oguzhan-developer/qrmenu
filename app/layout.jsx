@@ -9,6 +9,13 @@ export const metadata = {
   description: settings.description,
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export default async function RootLayout({
   children,
 }) {
@@ -23,7 +30,7 @@ export default async function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-screen">
-          <SpeedInsights/>
+            <SpeedInsights />
             <main className="container mx-auto max-w-7xl flex-grow flex flex-col items-center">
               {children}
             </main>
