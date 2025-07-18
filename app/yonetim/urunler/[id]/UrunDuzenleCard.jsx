@@ -96,17 +96,16 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
 
                         <Input
                             type="number"
+                            pattern="^\d+([.,]\d+)?$"
                             isRequired
-                            inputMode='numeric'
+                            inputMode='decimal'
                             className="w-full"
-                            max={9999}
+                            max={999}
                             min={0}
                             labelPlacement="outside"
                             label="Fiyat"
                             value={fiyat}
-                            onValueChange={(value) => {
-                                setFiyat(String(value).replace(/,/g, '.'))
-                            }}
+                            onValueChange={setFiyat}
                         />
 
                         <Select
