@@ -104,7 +104,6 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                             ))}
                         </Select>
 
-
                         {error && <p className="text-danger text-center mt-1">{error}</p>}
                         {success && <p className="text-success-800 text-center mt-1">Ürün başarıyla güncellendi.</p>}
 
