@@ -8,6 +8,8 @@ import { Input, Textarea } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { Button } from "@heroui/button";
 import { NumberInput } from "@heroui/number-input";
+import TextAreaElement from "../../../../components/FormElements/TextAreaElement";
+import NumberInputElement from "../../../../components/FormElements/NumberInputElement";
 
 export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpdateUrun, handleDeleteUrun }) {
     const [baslik, setBaslik] = React.useState(urun.baslik || "");
@@ -82,31 +84,12 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                             onValueChange={setBaslik}
                         />
 
-                        <Textarea
-                            fullWidth
-                            className='mt-3'
-                            label="Açıklama"
-                            labelPlacement="outside"
-                            maxLength={160}
-                            value={aciklama}
-                            onValueChange={setAciklama}
-                        />
+                        <TextAreaElement label={"Açıklama"} value={aciklama} onValueChange={setAciklama} />
 
                         <ImageInput resimPreview={resimPreview} mevcutResimUrl={mevcutResimUrl} setResimFile={setResimFile} setResimPreview={setResimPreview} setError={setError} />
 
-                        <Input
-                            type="number"
-                            pattern="^\d+([.,]\d+)?$"
-                            isRequired
-                            inputMode='decimal'
-                            className="w-full"
-                            max={999}
-                            min={0}
-                            labelPlacement="outside"
-                            label="Fiyat"
-                            value={fiyat}
-                            onValueChange={setFiyat}
-                        />
+                        <NumberInputElement label={"Fiyat"} value={fiyat} onValueChange={setFiyat} />
+                        
 
                         <Select
                             fullWidth

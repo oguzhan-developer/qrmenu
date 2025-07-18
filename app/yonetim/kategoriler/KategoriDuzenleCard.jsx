@@ -32,8 +32,8 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
         setError(false);
         setSuccess(false);
 
-        console.log("Resim flie",resimFile);
-        
+        console.log("Resim flie", resimFile);
+
         try {
             var newData = {
                 id: item.id,
@@ -45,7 +45,7 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                 newData.mevcutResim = item.resim;
             }
             console.log("Güncelleme verisi:", newData);
-            
+
             const result = await handleUpdateKategori(newData);
 
             if (result.error) {
@@ -113,6 +113,7 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                             name="isim"
                             type="text"
                             value={isim}
+                            description="Açıklama zorunlu değildir."
                             onValueChange={setIsim}
                         />
 
@@ -146,11 +147,6 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                         </div>
                     </div>
 
-                    {/* {submitted && (
-                        <div className="text-small text-default-500 mt-4">
-                            Submitted data: <pre>{JSON.stringify(submitted, null, 2)}</pre>
-                        </div>
-                    )} */}
                 </Form>
 
             </Card>
