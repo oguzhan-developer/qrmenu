@@ -2,8 +2,9 @@
 import { settings } from "@/config/settings";
 
 export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile, setResimPreview, setError }) {
+
     const handleFileChange = async (e) => {
-        const file = e.target.files[0];
+        var file = e.target.files[0];
         if (!file) return;
         const allowedTypes = settings.imageUpload.allowedTypes;
         if (!allowedTypes.includes(file.type)) {
@@ -11,14 +12,44 @@ export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile,
             return;
         }
 
-        // Dosya boyutu kontrolü (10MB)
+        // HEIC/HEIF formatı için dönüşüm
+        if (file.type === "image/heic" || file.type === "image/heif") {
+            setError("iPhone fotoğrafı dönüştürülüyor, lütfen bekleyin...");
+            setResimFile(null);
+            setResimPreview(null);
+
+            try {
+                const heic2anyModule = await import('heic2any');
+                const heic2any = heic2anyModule.default; // Genellikle default export kullanılır
+
+                const convertedBlob = await heic2any({
+                    blob: file,
+                    toType: "image/jpeg",
+                    quality: 0.8, // Kaliteyi ayarlayabilirsiniz
+                });
+
+                // Blob'u tekrar File objesine çeviriyoruz
+                const fileName = file.name.split('.')[0] + '.jpeg';
+                file = new File([convertedBlob], fileName, {
+                    type: "image/jpeg",
+                    lastModified: new Date().getTime(),
+                });
+
+            } catch (err) {
+                console.error("HEIC dönüşüm hatası:", err);
+                setError("Fotoğraf dönüştürülürken bir hata oluştu.");
+                return;
+            }
+        }
+
+
         if (file.size > settings.imageUpload.maxSize) {
             setError('Dosya boyutu çok büyük.');
             return;
         }
 
-        setResimFile(file);
         setError("");
+        setResimFile(file);
 
         // Preview oluştur
         const reader = new FileReader();
@@ -26,6 +57,7 @@ export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile,
 
         reader.readAsDataURL(file);
     };
+
     return (
         <>
             <div className="flex items-center justify-center w-full">
@@ -35,11 +67,12 @@ export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile,
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                         </svg>
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Resim yüklemek için tıkla</span></p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 px-3">JPG, PNG veya WeBP, maksimum 10MB</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 px-3">Maksimum 10MB</p>
                     </div>
                     <input id='dropzone-file' type="file"
                         name="inputFile"
-                        accept="image/jpeg,image/jpg,image/png,image/webp"
+                        accept={settings.imageUpload.allowedTypes.join(",")}
+                        // accept="image/jpeg,image/jpg,image/png,image/webp"
                         onChange={handleFileChange}
                         className="hidden"
                     />

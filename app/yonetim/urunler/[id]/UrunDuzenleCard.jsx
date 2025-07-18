@@ -12,7 +12,7 @@ import { NumberInput } from "@heroui/number-input";
 export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpdateUrun, handleDeleteUrun }) {
     const [baslik, setBaslik] = React.useState(urun.baslik || "");
     const [aciklama, setAciklama] = React.useState(urun.aciklama || "");
-    const [fiyat, setFiyat] = React.useState(parseFloat(urun.fiyat) || null);
+    const [fiyat, setFiyat] = React.useState(parseFloat(urun.fiyat?.toString().replace(",", ".")) || "0");
     const [secilenKategori, setSecilenKategori] = React.useState(urun.kategori_id.toString() || "");
 
     // Resim için ayrı ve temiz state'ler
@@ -42,7 +42,7 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                 newData.yeniResim = resimFile;
                 newData.mevcutResim = urun.resim;
             }
-            
+
             const result = await handleUpdateUrun(newData);
             if (result?.error) {
                 setError(result.error);
@@ -94,18 +94,19 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
 
                         <ImageInput resimPreview={resimPreview} mevcutResimUrl={mevcutResimUrl} setResimFile={setResimFile} setResimPreview={setResimPreview} setError={setError} />
 
-                        <NumberInput
+                        <Input
                             type="number"
                             isRequired
-                            inputMode='decimal'
-                            hideStepper
+                            inputMode='numeric'
                             className="w-full"
-                            minValue={0}
-                            maxValue={9999}
+                            max={9999}
+                            min={0}
                             labelPlacement="outside"
                             label="Fiyat"
                             value={fiyat}
-                            onValueChange={setFiyat}
+                            onValueChange={(value) => {
+                                setFiyat(String(value).replace(/,/g, '.'))
+                            }}
                         />
 
                         <Select
