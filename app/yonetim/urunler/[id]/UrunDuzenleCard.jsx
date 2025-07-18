@@ -12,7 +12,7 @@ import { NumberInput } from "@heroui/number-input";
 export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpdateUrun, handleDeleteUrun }) {
     const [baslik, setBaslik] = React.useState(urun.baslik || "");
     const [aciklama, setAciklama] = React.useState(urun.aciklama || "");
-    const [fiyat, setFiyat] = React.useState(parseFloat(urun.fiyat?.toString().replace(",", ".")) || "0");
+    const [fiyat, setFiyat] = React.useState(urun.fiyat || null);
     const [secilenKategori, setSecilenKategori] = React.useState(urun.kategori_id.toString() || "");
 
     // Resim için ayrı ve temiz state'ler
