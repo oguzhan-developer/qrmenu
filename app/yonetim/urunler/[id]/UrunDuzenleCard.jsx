@@ -4,12 +4,11 @@ import ImageInput from '@/components/ImageInput/ImageInput';
 import React from "react";
 import { Card } from "@heroui/card";
 import { Form } from "@heroui/form";
-import { Input, Textarea } from "@heroui/input";
+import { Input } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { Button } from "@heroui/button";
-import { NumberInput } from "@heroui/number-input";
-import TextAreaElement from "../../../../components/FormElements/TextAreaElement";
-import NumberInputElement from "../../../../components/FormElements/NumberInputElement";
+import TextAreaElement from "@/components/FormElements/TextAreaElement";
+import NumberInputElement from "@/components/FormElements/NumberInputElement";
 
 export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpdateUrun, handleDeleteUrun }) {
     const [baslik, setBaslik] = React.useState(urun.baslik || "");
@@ -20,7 +19,7 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
     // Resim için ayrı ve temiz state'ler
     const [resimFile, setResimFile] = React.useState(null); // Sadece yeni seçilen File objesi
     const [resimPreview, setResimPreview] = React.useState(null); // Sadece yeni seçilen resmin data URL'i
-    const [mevcutResimUrl] = React.useState(urun.resim || null); 
+    const [mevcutResimUrl] = React.useState(urun.resim || null);
 
     const [loading, setLoading] = React.useState(false);
     const [deleteLoading, setDeleteLoading] = React.useState(false);
@@ -64,8 +63,31 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
 
     }
 
-    const handleDelete = async (e) => {
-    }
+    const handleDelete = async () => {
+        const confirmed = window.confirm(`${baslik} ürününü silmek istediğinizden emin misiniz ?`);
+
+        if (!confirmed) return;
+
+        setDeleteLoading(true);
+        setError(false);
+
+        try {
+            const result = await handleDeleteUrun(urun.id);
+
+            if (result.error) {
+                console.error('Silme hatası:', result.error);
+            } else {
+                setSuccess('Ürün başarıyla silindi!');
+                router.push(`/yonetim/urunler/${urun.kategori_id}`);
+            }
+        } catch (error) {
+            console.error('Hata:', error);
+            setError(true);
+            alert('Silme sırasında hata oluştu!');
+        } finally {
+            setDeleteLoading(false);
+        }
+    };
 
     return (
         <div className="my-5">
@@ -89,7 +111,7 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                         <ImageInput resimPreview={resimPreview} mevcutResimUrl={mevcutResimUrl} setResimFile={setResimFile} setResimPreview={setResimPreview} setError={setError} />
 
                         <NumberInputElement label={"Fiyat"} value={fiyat} onValueChange={setFiyat} />
-                        
+
 
                         <Select
                             fullWidth
@@ -107,8 +129,10 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
                         {error && <p className="text-danger text-center mt-1">{error}</p>}
                         {success && <p className="text-success-800 text-center mt-1">Ürün başarıyla güncellendi.</p>}
 
-                        <Button className="w-full mt-3" size="md" color="primary" type="submit" spinnerPlacement="end" isLoading={loading}>Güncelle</Button>
-
+                        <div className="flex gap-4 items-center">
+                            <Button className="w-3/4 mt-3" size="md" color="primary" type="submit" spinnerPlacement="end" isLoading={loading}>Güncelle</Button>
+                            <Button className="w-1/4 mt-3" size="md" color="danger" onPress={handleDelete} spinnerPlacement="end" isLoading={deleteLoading}>Kaldır</Button>
+                        </div>
                     </div>
                 </Form>
             </Card>

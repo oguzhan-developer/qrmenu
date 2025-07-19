@@ -13,7 +13,7 @@ export default function ImageElement({ src, alt = "", width = 120, height = 130 
             alt={alt}
             draggable={false}
             priority={true}
-            className="w-full h-full object-cover rounded"
+            className="w-full h-full object-cover rounded hover:scale-105 transition-transform duration-200 ease-in-out"
         />
     )
 }

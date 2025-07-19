@@ -16,7 +16,7 @@ export default function LoginForm({ handleLogin, redirectTo }) {
 
     useEffect(() => {
         if (parolaInputRef.current) parolaInputRef.current.focus();
-    }, [error])
+    }, [])
 
 
     const onSubmit = async (e) => {
@@ -31,6 +31,10 @@ export default function LoginForm({ handleLogin, redirectTo }) {
 
         if (result?.error) {
             setError(result.error);
+            if (parolaInputRef.current) {
+                parolaInputRef.current.focus();
+                parolaInputRef.current.select();
+            }
         }
 
         setLoading(false);
@@ -49,7 +53,7 @@ export default function LoginForm({ handleLogin, redirectTo }) {
                         </h2>
 
                         <Input
-                        className="focus:outline-none"
+                            className="focus:outline-none"
                             ref={parolaInputRef}
                             isRequired
                             label="Parola"
@@ -60,6 +64,7 @@ export default function LoginForm({ handleLogin, redirectTo }) {
                             onValueChange={setParola}
                             placeholder="Parolanızı girin"
                             fullWidth
+                            autoFocus={true}
                         />
 
                         {error && (

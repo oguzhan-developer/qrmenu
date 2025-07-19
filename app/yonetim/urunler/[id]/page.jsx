@@ -4,6 +4,7 @@ import UrunlerCard from "./UrunlerCard";
 import UrunDuzenleCard from "./UrunDuzenleCard";
 import { formDataToUpdate } from "@/lib/form-handler";
 import { revalidatePath } from "next/cache";
+import { removeUrun } from "@/lib/database";
 export default async function Urunler({ params, searchParams }) {
 
     const { id } = await params;
@@ -26,6 +27,10 @@ export default async function Urunler({ params, searchParams }) {
         "use server"
         return await formDataToUpdate(formData, updateUrun, "urunler")
     }
+    const handleDeleteUrun = async (id) => {
+        "use server"
+        return await removeUrun(id);
+    }
 
 
     const editId = sParams?.edit;
@@ -35,7 +40,7 @@ export default async function Urunler({ params, searchParams }) {
             return (
                 <>
                     <TopNavbar title={`${urun.baslik} - Düzenle`} pathname={`/yonetim/urunler/${id}`} isYonetim />
-                    <UrunDuzenleCard kategoriler={kategoriler} urunler={urunler} urun={urun} handleUpdateUrun={handleUpdateUrun} /></>
+                    <UrunDuzenleCard kategoriler={kategoriler} urunler={urunler} urun={urun} handleUpdateUrun={handleUpdateUrun} handleDeleteUrun={handleDeleteUrun} /></>
             )
         }
     }

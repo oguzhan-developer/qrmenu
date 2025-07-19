@@ -2,13 +2,16 @@ import { Card, CardFooter } from "@heroui/card";
 import { Image } from "@heroui/image";
 import Link from "next/link";
 import Styles from "./style.module.css"
-
+import ImageElement from "@/components/FormElements/ImageElement"; 
 export default function KategoriCard({ title, image, id }) {
     
     return (
         <Link href={`/kategori/${id}`} prefetch className="block transition-all duration-150 ease-out transform active:scale-90 active:rotate-1" >
-            <Card className="border-none items-center w-full max-w-[200px] mx-auto" radius="lg">
-                <Image
+            <Card className="border-none items-center w-full max-w-[200px] mx-auto h-48" radius="lg">
+                <div className="w-full h-full">
+                <ImageElement src={image} width={200} height={200} alt={title} />
+                </div>
+                {/* <Image
                     alt={title}
                     className="object-cover"
                     height={200}
@@ -16,7 +19,7 @@ export default function KategoriCard({ title, image, id }) {
                     width={200}
                     draggable={false}
                     isZoomed
-                />
+                /> */}
                 <CardFooter className={`${Styles.cardFooter} before:bg-white/10 justify-center border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 shadow-small z-10 m-0 bg-slate-600`}>
                     <p className="text-center text-white/80" >{title}</p>
                 </CardFooter>
