@@ -18,7 +18,7 @@ export default function TopNavbar({ pathname = "/", title = settings.title, isYo
                 </div>
 
                 {
-                    isYonetim ? (<YonetimSayfaButton />) : <div className="size-10" />
+                    isYonetim ? (<YonetimSayfaButton />) : <div className="mr-2 size-10" />
                 }
                 
 

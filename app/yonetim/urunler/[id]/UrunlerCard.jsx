@@ -4,6 +4,7 @@ import { Card } from "@heroui/card";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { formatPrice } from "@/lib/utils";
+import ImageElement from "@/components/FormElements/ImageElement";
 export default function UrunlerCard({ urunler, onSiraDegistir }) {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
@@ -31,18 +32,19 @@ export default function UrunlerCard({ urunler, onSiraDegistir }) {
     }
 
     return (
-         <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="space-y-4 mt-3 mb-4">
                 {urunler.map(urun => (
                     <Card key={urun.id} className="w-full max-w-none mx-auto p-4">
                         <div className="flex items-start gap-4 h-32"> {/* Sabit yükseklik */}
                             {/* Resim - Sabit boyut */}
                             <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24">
-                                <img
-                                    src={`/urunler/${urun.resim}`}
+                                {/* <img
+                                    src={`${urun.resim}`}
                                     alt={urun.baslik}
                                     className="w-full h-full object-cover rounded"
-                                />
+                                /> */}
+                                <ImageElement src={urun.resim} alt={urun.baslik} />
                             </div>
 
                             {/* İçerik */}
@@ -64,11 +66,11 @@ export default function UrunlerCard({ urunler, onSiraDegistir }) {
                                 {/* Orta kısım - Açıklama */}
                                 <div className="flex-1 mb-3">
                                     <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed">
-                                        {urun.aciklama ? 
-                                            (urun.aciklama.length > 80 ? 
-                                                urun.aciklama.slice(0, 80) + "..." : 
+                                        {urun.aciklama ?
+                                            (urun.aciklama.length > 80 ?
+                                                urun.aciklama.slice(0, 80) + "..." :
                                                 urun.aciklama
-                                            ) : 
+                                            ) :
                                             <span className="text-gray-400">Açıklama bulunmuyor.</span>
                                         }
                                     </p>

@@ -3,6 +3,8 @@ import { settings } from "@/config/settings";
 
 export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile, setResimPreview, setError }) {
 
+    const HOSTNAME = process.env.NEXT_PUBLIC_BUNNY_STORAGE_PULL_HOSTNAME;
+
     const handleFileChange = async (e) => {
         var file = e.target.files[0];
         if (!file) return;
@@ -81,7 +83,7 @@ export default function ImageInput({ resimPreview, mevcutResimUrl, setResimFile,
             {(resimPreview || mevcutResimUrl) && (
                 <div className="mx-auto">
                     <img
-                        src={resimPreview || mevcutResimUrl}
+                        src={resimPreview ? resimPreview : `https://${HOSTNAME}/${mevcutResimUrl}`}
                         alt="Ürün Resmi"
                         className="w-24 h-24 object-cover rounded border"
                     />

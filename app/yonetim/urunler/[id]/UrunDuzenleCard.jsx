@@ -20,7 +20,7 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
     // Resim için ayrı ve temiz state'ler
     const [resimFile, setResimFile] = React.useState(null); // Sadece yeni seçilen File objesi
     const [resimPreview, setResimPreview] = React.useState(null); // Sadece yeni seçilen resmin data URL'i
-    const [mevcutResimUrl] = React.useState(urun.resim ? `/urunler/${urun.resim}` : null); // Mevcut resmin URL'i, sabit
+    const [mevcutResimUrl] = React.useState(urun.resim || null); 
 
     const [loading, setLoading] = React.useState(false);
     const [deleteLoading, setDeleteLoading] = React.useState(false);
@@ -71,10 +71,10 @@ export default function UrunDuzenleCard({ kategoriler, urunler, urun, handleUpda
         <div className="my-5">
             <Card className="w-full">
                 <Form
-                    className="w-full justify-center items-center space-y-4 p-4"
+                    className="w-full justify-center items-center space-y-4 p-4 px-5"
                     onSubmit={handleSubmit}
                 >
-                    <div className="w-full flex flex-col gap-3 ">
+                    <div className="w-full flex flex-col gap-3 mx-6">
                         <Input
                             fullWidth
                             isRequired

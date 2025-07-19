@@ -1,6 +1,7 @@
 import { Card } from "@heroui/card";
 import { Image } from "@heroui/image";
 import Styles from "./style.module.css"
+import ImageElement from "../../../components/FormElements/ImageElement";
 export default function UrunCard({ title, desc, price, image }) {
 
     return (
@@ -10,15 +11,16 @@ export default function UrunCard({ title, desc, price, image }) {
                     <div className="min-w-[120px] my-auto">
                         {
                             image && (
-                                <Image
-                                    alt="cay"
-                                    className="object-cover"
-                                    height={130}
-                                    src={`/urunler/${image}`}
-                                    width={120}
-                                    draggable={false}
-                                    radius="sm"
-                                />
+                                <ImageElement src={image} alt={title} />
+                                // <Image
+                                //     alt="cay"
+                                //     className="object-cover"
+                                //     height={130}
+                                //     src={`/urunler/${image}`}
+                                //     width={120}
+                                //     draggable={false}
+                                //     radius="sm"
+                                // />
                             )
                         }
                     </div>
