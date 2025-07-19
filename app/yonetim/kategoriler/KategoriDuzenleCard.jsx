@@ -13,7 +13,7 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
     // Resim için ayrı ve temiz state'ler
     const [resimFile, setResimFile] = React.useState(null); // Sadece yeni seçilen File objesi
     const [resimPreview, setResimPreview] = React.useState(null); // Sadece yeni seçilen resmin data URL'i
-    const [mevcutResimUrl] = React.useState(item.resim ? `/kategoriler/${item.resim}` : null); // Mevcut resmin URL'i, sabit
+    const [mevcutResimUrl] = React.useState(item.resim || null); // Mevcut resmin URL'i, sabit
 
     const [sira, setSira] = React.useState(item.sira.toString() || "");
     const [loading, setLoading] = React.useState(false);
@@ -81,7 +81,7 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                 console.error('Silme hatası:', result.error);
 
                 if (result.error.code === 'CATEGORY_HAS_PRODUCTS') {
-                    setError('Bu kategoriye ait ürünler mevcut. Önce ürünleri silin.');
+                    setError('Bu kategoriye ait ürünler mevcut, önce ürünleri silin!');
                 } else {
                     setError('Silme sırasında hata oluştu!');
                 }
@@ -113,7 +113,6 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                             name="isim"
                             type="text"
                             value={isim}
-                            description="Açıklama zorunlu değildir."
                             onValueChange={setIsim}
                         />
 
@@ -135,7 +134,7 @@ export default function KategoriDuzenleCard({ item, kategoriler, handleUpdateKat
                             ))}
                         </Select>
 
-                        {error && <span className="text-danger text-small">Hata Oluştu. {error}</span>}
+                        {error && <span className="text-danger text-small">{error}</span>}
 
                         <div className="flex gap-4 items-center">
                             <Button className="w-3/4" color="primary" type="submit" spinnerPlacement="end" isLoading={loading} size="sm">
