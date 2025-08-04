@@ -11,14 +11,9 @@ Parola: kafe12345
 
 Görseller:
 
-![Menü](https://github.com/oguzhan-developer/qrmenu/blob/287d97f4bc87a6d4a7be7851881a632e8956754d/gorseller/menu.png)
-
-![Duyuru Düzenleme](https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/duyuru_duzenle.png)
-
-![Ürünleri Düzenleme](https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/urunler_duzenleme.png)
-
-![Ürün Oluştur](https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/urun_olustur.png)
-
-![Ürün Düzenleme](https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/urun_detay.png)
-
-![Kategori Seçimi](https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/kategori_sec.png)
+<img src="https://github.com/oguzhan-developer/qrmenu/blob/287d97f4bc87a6d4a7be7851881a632e8956754d/gorseller/menu.png" width="550"/>  
+<img src="https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/duyuru_duzenle.png" width="550"/>  
+<img src="https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/urunler_duzenleme.png" width="550"/>  
+<img src="https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/urun_olustur.png" width="550"/>  
+<img src="https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/urun_detay.png" width="550"/>  
+<img src="https://github.com/oguzhan-developer/qrmenu/blob/a1549627e9f810448f3b82e3dfd1b4d2aaa62ca7/gorseller/kategori_sec.png" width="550"/>  
